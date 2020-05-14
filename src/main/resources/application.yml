@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://111.230.30.42/questionnaire?characterEncoding=utf8&useSSL=false
+    username: root
+    password: 243200
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      pool-prepared-statements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+  data:
+    mongodb:
+      database: question
+      uri: mongodb+srv://243200:fjtI1ycupJG1025t@cluster0-edkmb.azure.mongodb.net
+  jpa:
+    open-in-view: false
+
+logging:
+  level:
+    cn.edu.zucc.mongo: debug
+    org.springframework: info
+
+mybatis:
+  type-aliases-package: cn.edu.zucc.mongo.mysql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
