@@ -1,10 +1,12 @@
 package cn.edu.zucc.ohmyquestionnaire.controller;
 
 import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
+import cn.edu.zucc.ohmyquestionnaire.form.UserLoginForm;
 import cn.edu.zucc.ohmyquestionnaire.mysql.bean.BeanUser;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +31,10 @@ public class UserController {
     public ResultBean<BeanUser> addAllUser() {
         userService.addUser();
         return new ResultBean<>(BeanUser.builder().uid(2).userName("1").build());
+    }
+
+    @PostMapping("/login")
+    public ResultBean<BeanUser> login(UserLoginForm userLoginForm) {
+        return null;
     }
 }
