@@ -1,5 +1,6 @@
 package cn.edu.zucc.ohmyquestionnaire.controller;
 
+import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
 import cn.edu.zucc.ohmyquestionnaire.mysql.bean.BeanUser;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +21,13 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<BeanUser> getAllUser(){
-        return userService.allUser();
+    public ResultBean<List<BeanUser>> getAllUser() {
+        return new ResultBean<>(userService.allUser());
     }
+
     @GetMapping("/add")
-    public void addAllUser(){
+    public ResultBean<BeanUser> addAllUser() {
         userService.addUser();
+        return new ResultBean<>(BeanUser.builder().uid(2).userName("1").build());
     }
 }

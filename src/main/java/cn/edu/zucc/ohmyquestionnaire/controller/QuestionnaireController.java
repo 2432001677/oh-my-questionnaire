@@ -1,5 +1,6 @@
 package cn.edu.zucc.ohmyquestionnaire.controller;
 
+import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class QuestionnaireController {
     }
 
     @GetMapping("/all")
-    public List<BeanQuestionnaire> allQuestion(){
-        return questionnaireService.allQuestionnaire();
+    public ResultBean<List<BeanQuestionnaire>> allQuestion() {
+        return new ResultBean<>(questionnaireService.allQuestionnaire());
     }
 }
