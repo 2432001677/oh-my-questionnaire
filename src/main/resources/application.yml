@@ -27,7 +27,7 @@ spring:
 
 logging:
   level:
-    cn.edu.zucc.mongo: debug
+    cn.edu.zucc.ohmyquestionnaire: debug
     org.springframework: info
 
 mybatis:
