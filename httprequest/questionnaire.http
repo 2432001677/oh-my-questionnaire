@@ -1,6 +1,6 @@
-GET http://localhost:8080/questionnaire/all
+GET http://localhost:8001/questionnaire/all
 
 ###
-GET http://localhost:8080/questionnaire/page?page=0&uid=1
+GET http://localhost:8001/questionnaire/page?page=0&uid=1
 
 ###

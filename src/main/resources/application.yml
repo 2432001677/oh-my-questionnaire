@@ -34,3 +34,6 @@ mybatis:
   type-aliases-package: cn.edu.zucc.mongo.mysql
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+server:
+  port: 8001
