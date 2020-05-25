@@ -24,8 +24,15 @@ public class QuestionnaireService implements IQuestionnaire {
         return questionnaireDao.findAll();
     }
 
+    @Override
+    public BeanQuestionnaire addQuestionnaire(BeanQuestionnaire beanQuestionnaire) {
+        questionnaireDao.insert(beanQuestionnaire);
+        return beanQuestionnaire;
+    }
+
     public Page<BeanQuestionnaire> pageQuestionnaire(int uid, int page) {
         Pageable pageable = PageRequest.of(page, 2, Sort.by(Sort.Direction.ASC,"createTime"));
         return questionnaireDao.findAllByUid(uid, pageable);
     }
+
 }

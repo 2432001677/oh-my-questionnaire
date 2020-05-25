@@ -1,6 +1,7 @@
 package cn.edu.zucc.ohmyquestionnaire.mongo.bean;
 
 import cn.edu.zucc.ohmyquestionnaire.mongo.pojo.Question;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ public class BeanQuestionnaire {
     @Field("title")
     private String title;
     @Field("create_time")
+    @JsonAlias("create_time")
     private Date createTime;
     @Field("questions")
     private List<Question> questions;

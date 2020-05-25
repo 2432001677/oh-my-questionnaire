@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IQuestionnaire{
     List<BeanQuestionnaire> allQuestionnaire();
+
+    BeanQuestionnaire addQuestionnaire(BeanQuestionnaire beanQuestionnaire);
 }
