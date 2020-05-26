@@ -9,7 +9,8 @@ POST http://localhost:8001/questionnaire/1/create
 Content-Type: application/json
 
 {
-    "title":"问6 ",
+    "title":"问6",
+    "description":"描述111",
     "status":2,
     "create_time":"2020-05-26T11:56:24.525Z",
      "questions":[

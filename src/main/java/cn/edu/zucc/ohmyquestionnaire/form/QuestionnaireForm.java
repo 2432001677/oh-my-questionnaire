@@ -10,6 +10,7 @@ import java.util.List;
 public class QuestionnaireForm {
     private Integer status;
     private String title;
+    private String description;
     @JsonAlias("create_time")
     private Date createTime;
     private List<QuestionForm> questions;

@@ -25,6 +25,8 @@ public class BeanQuestionnaire {
     private Integer status;
     @Field("title")
     private String title;
+    @Field("description")
+    private String description;
     @Field("create_time")
     @JsonAlias("create_time")
     private Date createTime;

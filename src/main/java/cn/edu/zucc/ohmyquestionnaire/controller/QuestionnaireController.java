@@ -47,6 +47,7 @@ public class QuestionnaireController {
                 .status(questionnaireForm.getStatus())
                 .createTime(questionnaireForm.getCreateTime())
                 .title(questionnaireForm.getTitle())
+                .description(questionnaireForm.getDescription())
                 .build();
         List<Question> questions = new ArrayList<>();
         for (QuestionForm form : questionnaireForm.getQuestions()) {
