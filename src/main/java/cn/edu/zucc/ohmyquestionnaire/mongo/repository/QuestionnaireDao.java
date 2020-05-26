@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuestionnaireDao extends MongoRepository<BeanQuestionnaire, String> {
-    Page<BeanQuestionnaire> findAllByUid(Integer uid, Pageable pageable);
+    Page<BeanQuestionnaire> findAllByUidAndStatusNot(Integer uid,Integer status, Pageable pageable);
+
+    Page<BeanQuestionnaire> findAllByUidAndStatus(Integer uid, Integer status, Pageable pageable);
 }

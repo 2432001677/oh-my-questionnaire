@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class QuestionnaireForm {
+    private String id;
     private Integer status;
     private String title;
     private String description;

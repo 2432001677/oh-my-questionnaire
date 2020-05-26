@@ -1,5 +1,6 @@
 package cn.edu.zucc.ohmyquestionnaire.controller;
 
+import cn.edu.zucc.ohmyquestionnaire.enums.StatusCode;
 import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
 import cn.edu.zucc.ohmyquestionnaire.form.UserLoginForm;
 import cn.edu.zucc.ohmyquestionnaire.form.UserForm;
@@ -37,8 +38,10 @@ public class UserController {
         } else {
             rtVal.setData(UserForm.builder().uid(beanUser.getUid()).userName(beanUser.getUserName()).build());
             rtVal.setMsg("登录成功");
-            if (!(beanUser.getPassword().equals(userLoginForm.getPassword())))
+            if (!(beanUser.getPassword().equals(userLoginForm.getPassword()))) {
                 rtVal.setMsg("密码错误");
+                rtVal.setCode(StatusCode.FAIL.getCode());
+            }
         }
         return rtVal;
     }

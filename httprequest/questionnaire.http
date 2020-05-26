@@ -1,18 +1,21 @@
 GET http://localhost:8001/questionnaire
 
 ###
-GET http://localhost:8001/questionnaire/page?page=0&uid=1
+GET http://localhost:8001/questionnaire/6?page=0
 
 ###
+GET http://localhost:8001/questionnaire/6/trash?page=0
 
+###
 POST http://localhost:8001/questionnaire/1/create
 Content-Type: application/json
 
 {
-    "title":"问6",
-    "description":"描述111",
-    "status":2,
-    "create_time":"2020-05-26T11:56:24.525Z",
+    "id":"",
+    "title":"问1",
+    "description":"desc1",
+    "status":0,
+    "create_time":"2020-05-26T15:56:24.525Z",
      "questions":[
         {"qtype":"多选","require":true,"qtitle":"择一下选项(多选)","options":["选项1","选项2"]},
         {"qtype":"单选","require":false,"qtitle":"请选个选项","options":["选1","选2"]},
