@@ -9,9 +9,9 @@ POST http://localhost:8001/questionnaire/1/create
 Content-Type: application/json
 
 {
-    "title":"问5",
-    "status":"using",
-    "create_time":"2020-05-25T11:56:24.525Z",
+    "title":"问6 ",
+    "status":2,
+    "create_time":"2020-05-26T11:56:24.525Z",
      "questions":[
         {"qtype":"多选","require":true,"qtitle":"择一下选项(多选)","options":["选项1","选项2"]},
         {"qtype":"单选","require":false,"qtitle":"请选个选项","options":["选1","选2"]},

@@ -22,7 +22,7 @@ public class BeanQuestionnaire {
     @Field("uid")
     private Integer uid;
     @Field("status")
-    private String status;
+    private Integer status;
     @Field("title")
     private String title;
     @Field("create_time")

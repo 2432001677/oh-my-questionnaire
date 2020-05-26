@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class QuestionnaireForm {
-    private String status;
+    private Integer status;
     private String title;
     @JsonAlias("create_time")
     private Date createTime;
