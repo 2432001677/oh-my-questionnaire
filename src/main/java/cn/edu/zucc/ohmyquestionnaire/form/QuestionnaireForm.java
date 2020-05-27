@@ -1,6 +1,7 @@
 package cn.edu.zucc.ohmyquestionnaire.form;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;

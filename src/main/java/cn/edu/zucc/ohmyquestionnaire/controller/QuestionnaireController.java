@@ -8,6 +8,7 @@ import cn.edu.zucc.ohmyquestionnaire.form.ResultPageBean;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.pojo.Question;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +28,7 @@ public class QuestionnaireController {
     }
 
     @ApiOperation(value = "分页返回用户已发布和未发布问卷")
-    @GetMapping("/{uid}")
+    @GetMapping("/user/{uid}")
     public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> pageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
         Page<BeanQuestionnaire> questionnaires = questionnaireService.pageQuestionnaire(uid, page);
         List<QuestionnaireForm> data = transferToForm(questionnaires);
@@ -36,7 +37,7 @@ public class QuestionnaireController {
     }
 
     @ApiOperation(value = "分页返回用户垃圾箱问卷")
-    @GetMapping("/{uid}/trash")
+    @GetMapping("/user/{uid}/trash")
     public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> trashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
         Page<BeanQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page);
         List<QuestionnaireForm> data = transferToForm(questionnaires);
@@ -45,7 +46,7 @@ public class QuestionnaireController {
     }
 
     @ApiOperation(value = "创建问卷,有id则表示修改")
-    @PostMapping("/{uid}/create")
+    @PostMapping("/user/{uid}/create")
     public ResultBean<QuestionnaireForm> createQuestionnaire(@PathVariable("uid") Integer uid, @RequestBody QuestionnaireForm questionnaireForm) {
         ResultBean<QuestionnaireForm> rtVal = new ResultBean<>();
         String id = questionnaireForm.getId();
