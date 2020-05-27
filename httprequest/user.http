@@ -1,5 +1,12 @@
-POST http://localhost:8001/user/login
-Content-Type: application/json
+@hostname = localhost
+@port = 8001
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDU0NDIyMH0.0o_G7lb2OFgakl8EWSVD4VMEBz_-eH5AcllFokkOBdU
+
+###
+POST http://{{host}}/user/login
+Content-Type: {{contentType}}
 
 {
   "userName": "a",
@@ -7,4 +14,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8001/user/all
+GET http://{{host}}/user/all
+x-token: {{token}}
+
+###
