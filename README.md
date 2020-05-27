@@ -7,5 +7,5 @@ druid
 > 用来接口调试
 ## swagger2
 调试接口更方便  
-[swagger-json](http://localhost:8080/v2/api-docs)  
-[swagger-ui](http://localhost:8080/swagger-ui.html)  
+[swagger-json](http://localhost:8001/v2/api-docs)  
+[swagger-ui](http://localhost:8001/swagger-ui.html)  
