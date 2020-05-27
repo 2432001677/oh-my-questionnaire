@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -54,6 +55,9 @@ public class UserController {
                 responseHeaders.set("x-token", token);
             }
         }
+        List<String> header = new ArrayList<>();
+        header.add("x-token");
+        responseHeaders.setAccessControlExposeHeaders(header);
 
         return new ResponseEntity<>(rtVal, responseHeaders, HttpStatus.OK);
     }
