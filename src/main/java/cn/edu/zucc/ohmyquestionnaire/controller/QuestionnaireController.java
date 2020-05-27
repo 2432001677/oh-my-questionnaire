@@ -6,9 +6,9 @@ import cn.edu.zucc.ohmyquestionnaire.form.QuestionnaireForm;
 import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
 import cn.edu.zucc.ohmyquestionnaire.form.ResultPageBean;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
+import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanTrashQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.pojo.Question;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -27,21 +27,42 @@ public class QuestionnaireController {
         this.questionnaireService = questionnaireService;
     }
 
+    @GetMapping("/{id}")
+    public ResultBean<QuestionnaireForm> UserQuestionnaire(@PathVariable("id") String id) {
+        ResultBean<QuestionnaireForm> rtVal = new ResultBean<>();
+        BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(id);
+        if (questionnaire != null) {
+
+        }
+        return rtVal;
+    }
+
     @ApiOperation(value = "分页返回用户已发布和未发布问卷")
     @GetMapping("/user/{uid}")
-    public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> pageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
+    public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> userPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
         Page<BeanQuestionnaire> questionnaires = questionnaireService.pageQuestionnaire(uid, page);
-        List<QuestionnaireForm> data = transferToForm(questionnaires);
+        List<QuestionnaireForm> data = new ArrayList<>();
 
+        for (BeanQuestionnaire t : questionnaires.getContent()) {
+            QuestionnaireForm form = QuestionnaireForm.builder().build();
+            BeanUtils.copyProperties(t, form);
+            form.setQuestions(null);
+            data.add(form);
+        }
         return new ResultPageBean<>(page, data, questionnaires);
     }
 
     @ApiOperation(value = "分页返回用户垃圾箱问卷")
     @GetMapping("/user/{uid}/trash")
-    public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> trashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
-        Page<BeanQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page);
-        List<QuestionnaireForm> data = transferToForm(questionnaires);
-
+    public ResultPageBean<QuestionnaireForm, BeanTrashQuestionnaire> userTrashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
+        Page<BeanTrashQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page);
+        List<QuestionnaireForm> data = new ArrayList<>();
+        for (BeanTrashQuestionnaire t : questionnaires.getContent()) {
+            QuestionnaireForm form = QuestionnaireForm.builder().build();
+            BeanUtils.copyProperties(t, form);
+            form.setQuestions(null);
+            data.add(form);
+        }
         return new ResultPageBean<>(page, data, questionnaires);
     }
 
@@ -97,13 +118,13 @@ public class QuestionnaireController {
         return new ResultBean<>(questionnaireService.allQuestionnaire());
     }
 
-    public List<QuestionnaireForm> transferToForm(Page<BeanQuestionnaire> questionnaires) {
-        List<QuestionnaireForm> data = new ArrayList<>();
-        for (BeanQuestionnaire q : questionnaires.getContent()) {
-            QuestionnaireForm form = new QuestionnaireForm();
-            BeanUtils.copyProperties(q, form);
-            data.add(form);
-        }
-        return data;
-    }
+//    public List<QuestionnaireForm> transferToForm(Page<BeanQuestionnaire> questionnaires) {
+//        List<QuestionnaireForm> data = new ArrayList<>();
+//        for (BeanQuestionnaire q : questionnaires.getContent()) {
+//            QuestionnaireForm form = new QuestionnaireForm();
+//            BeanUtils.copyProperties(q, form);
+//            data.add(form);
+//        }
+//        return data;
+//    }
 }

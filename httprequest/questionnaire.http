@@ -2,18 +2,23 @@
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDU4OTcxN30.7eCDxmthkvMdVvL0AlC56vaYktljTeCDPsBk_YuqRns
 
 ###
 GET http://localhost:8001/questionnaire
+x-token: {{token}}
 
 ###
-GET http://localhost:8001/questionnaire/6?page=0
+GET http://localhost:8001/questionnaire/user/6?page=0
+x-token: {{token}}
 
 ###
-GET http://localhost:8001/questionnaire/6/trash?page=0
+GET http://localhost:8001/questionnaire/user/6/trash?page=0
+x-token: {{token}}
 
 ###
 POST http://localhost:8001/questionnaire/1/create
+x-token: {{token}}
 Content-Type: application/json
 
 {

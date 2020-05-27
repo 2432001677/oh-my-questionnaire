@@ -1,6 +1,7 @@
 package cn.edu.zucc.ohmyquestionnaire.service;
 
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
+import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanTrashQuestionnaire;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface IQuestionnaire {
 
     BeanQuestionnaire addQuestionnaire(BeanQuestionnaire beanQuestionnaire);
 
-    Page<BeanQuestionnaire> trashPageQuestionnaire(int uid, int page);
+    Page<BeanTrashQuestionnaire> trashPageQuestionnaire(int uid, int page);
 
     Page<BeanQuestionnaire> pageQuestionnaire(int uid, int page);
 }
