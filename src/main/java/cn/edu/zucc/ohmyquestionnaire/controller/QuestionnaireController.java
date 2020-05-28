@@ -1,10 +1,8 @@
 package cn.edu.zucc.ohmyquestionnaire.controller;
 
+import cn.edu.zucc.ohmyquestionnaire.enums.QuestionnaireCode;
 import cn.edu.zucc.ohmyquestionnaire.enums.StatusCode;
-import cn.edu.zucc.ohmyquestionnaire.form.QuestionForm;
-import cn.edu.zucc.ohmyquestionnaire.form.QuestionnaireForm;
-import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
-import cn.edu.zucc.ohmyquestionnaire.form.ResultPageBean;
+import cn.edu.zucc.ohmyquestionnaire.form.*;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanTrashQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.pojo.Question;
@@ -28,19 +26,49 @@ public class QuestionnaireController {
     }
 
     @GetMapping("/{id}")
-    public ResultBean<QuestionnaireForm> UserQuestionnaire(@PathVariable("id") String id) {
+    public ResultBean<QuestionnaireForm> userQuestionnaire(@PathVariable("id") String id) {
         ResultBean<QuestionnaireForm> rtVal = new ResultBean<>();
         BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(id);
         if (questionnaire != null) {
+            if (questionnaire.getStatus().equals(QuestionnaireCode.OPENING.getCode())) {
+                List<QuestionForm> questionFormList = new ArrayList<>();
+                // Question的Map转为QuestionForm的List
+                for (Question question : questionnaire.getQuestions()) {
+                    Map<String, String> oldOptions = question.getOptions();
+                    QuestionForm questionForm = QuestionForm.builder().build();
+                    List<String> newOptions = new ArrayList<>(oldOptions.size());
+                    oldOptions.keySet().forEach((key) -> newOptions.add(Integer.parseInt(key), oldOptions.get(key)));
 
+                    BeanUtils.copyProperties(question, questionForm);
+                    questionForm.setOptions(newOptions);
+                    questionFormList.add(questionForm);
+                }
+                QuestionnaireForm questionnaireForm = QuestionnaireForm.builder()
+                        .description(questionnaire.getDescription())
+                        .createTime(questionnaire.getCreateTime())
+                        .status(questionnaire.getStatus())
+                        .title(questionnaire.getTitle())
+                        .questions(questionFormList)
+                        .id(questionnaire.getId())
+                        .build();
+
+                rtVal.setData(questionnaireForm);
+            } else {
+                rtVal.setMsg("该问卷已关闭或被删除");
+                rtVal.setCode(StatusCode.NO_PERMISSION.getCode());
+            }
+        } else {
+            rtVal.setMsg("不存在");
+            rtVal.setCode(StatusCode.FAIL.getCode());
         }
         return rtVal;
     }
 
     @ApiOperation(value = "分页返回用户已发布和未发布问卷")
     @GetMapping("/user/{uid}")
-    public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> userPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
-        Page<BeanQuestionnaire> questionnaires = questionnaireService.pageQuestionnaire(uid, page);
+    public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> userPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        if (size == null || size <= 0) size = 5;
+        Page<BeanQuestionnaire> questionnaires = questionnaireService.pageQuestionnaire(uid, page, size);
         List<QuestionnaireForm> data = new ArrayList<>();
 
         for (BeanQuestionnaire t : questionnaires.getContent()) {
@@ -54,8 +82,9 @@ public class QuestionnaireController {
 
     @ApiOperation(value = "分页返回用户垃圾箱问卷")
     @GetMapping("/user/{uid}/trash")
-    public ResultPageBean<QuestionnaireForm, BeanTrashQuestionnaire> userTrashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page) {
-        Page<BeanTrashQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page);
+    public ResultPageBean<QuestionnaireForm, BeanTrashQuestionnaire> userTrashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        if (size == null || size <= 0) size = 5;
+        Page<BeanTrashQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page, size);
         List<QuestionnaireForm> data = new ArrayList<>();
         for (BeanTrashQuestionnaire t : questionnaires.getContent()) {
             QuestionnaireForm form = QuestionnaireForm.builder().build();
@@ -66,65 +95,10 @@ public class QuestionnaireController {
         return new ResultPageBean<>(page, data, questionnaires);
     }
 
-    @ApiOperation(value = "创建问卷,有id则表示修改")
-    @PostMapping("/user/{uid}/create")
-    public ResultBean<QuestionnaireForm> createQuestionnaire(@PathVariable("uid") Integer uid, @RequestBody QuestionnaireForm questionnaireForm) {
-        ResultBean<QuestionnaireForm> rtVal = new ResultBean<>();
-        String id = questionnaireForm.getId();
-        BeanQuestionnaire beanQuestionnaire;
-        if ("".equals(id) || id == null) {
-            beanQuestionnaire = BeanQuestionnaire.builder()
-                    .uid(uid)
-                    .status(questionnaireForm.getStatus())
-                    .createTime(questionnaireForm.getCreateTime())
-                    .title(questionnaireForm.getTitle())
-                    .description(questionnaireForm.getDescription())
-                    .build();
-            rtVal.setMsg("创建成功");
-        } else {
-            beanQuestionnaire = questionnaireService.getQuestionnaire(questionnaireForm.getId());
-            rtVal.setMsg("修改成功");
-            if (beanQuestionnaire == null) {
-                rtVal.setMsg("问卷不存在");
-                rtVal.setCode(StatusCode.FAIL.getCode());
-                return rtVal;
-            }
-            beanQuestionnaire = beanQuestionnaire.toBuilder()
-                    .description(questionnaireForm.getDescription())
-                    .status(questionnaireForm.getStatus())
-                    .title(questionnaireForm.getTitle())
-                    .build();
-        }
-        List<Question> questions = new ArrayList<>();
-        for (QuestionForm form : questionnaireForm.getQuestions()) {
-            Map<String, String> options = new LinkedHashMap<>();
-            for (int i = 0; i < form.getOptions().size(); i++)
-                options.put(Integer.toString(i), form.getOptions().get(i));
-            Question question = Question.builder()
-                    .qtitle(form.getQtitle())
-                    .qtype(form.getQtype())
-                    .require(form.getRequire())
-                    .options(options)
-                    .build();
-            questions.add(question);
-        }
-        beanQuestionnaire.setQuestions(questions);
-        questionnaireService.addQuestionnaire(beanQuestionnaire);
+    @PostMapping("/delete")
+    public ResultBean<Object> deleteQuestionnaire(@RequestBody DeleteForm deleteForm) {
+        ResultBean<Object> rtVal = new ResultBean<>();
+
         return rtVal;
     }
-
-    @GetMapping
-    public ResultBean<List<BeanQuestionnaire>> allQuestionnaire() {
-        return new ResultBean<>(questionnaireService.allQuestionnaire());
-    }
-
-//    public List<QuestionnaireForm> transferToForm(Page<BeanQuestionnaire> questionnaires) {
-//        List<QuestionnaireForm> data = new ArrayList<>();
-//        for (BeanQuestionnaire q : questionnaires.getContent()) {
-//            QuestionnaireForm form = new QuestionnaireForm();
-//            BeanUtils.copyProperties(q, form);
-//            data.add(form);
-//        }
-//        return data;
-//    }
 }

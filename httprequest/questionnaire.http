@@ -2,10 +2,10 @@
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDU4OTcxN30.7eCDxmthkvMdVvL0AlC56vaYktljTeCDPsBk_YuqRns
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDczMjYzNX0.i4LRDON0p7XzEC2K6WmxD0cdM3x9NUV5veMG7rN-brA
 
 ###
-GET http://localhost:8001/questionnaire
+GET http://localhost:8001/questionnaire/5ecf40b0a3ffcc141f89a7be
 x-token: {{token}}
 
 ###
@@ -17,23 +17,6 @@ GET http://localhost:8001/questionnaire/user/6/trash?page=0
 x-token: {{token}}
 
 ###
-POST http://localhost:8001/questionnaire/1/create
+GET http://{{host}}/questionnaire/5ecf4a14a3ffcc141f89a7c4/recover
 x-token: {{token}}
-Content-Type: application/json
-
-{
-    "id":"",
-    "title":"问1",
-    "description":"desc1",
-    "status":0,
-    "create_time":"2020-05-26T15:56:24.525Z",
-     "questions":[
-        {"qtype":"多选","require":true,"qtitle":"择一下选项(多选)","options":["选项1","选项2"]},
-        {"qtype":"单选","require":false,"qtitle":"请选个选项","options":["选1","选2"]},
-        {"qtype":"填空","require":false,"qtitle":"标题标题","options":[]},
-        {"qtype":"评分","require":true,"qtitle":"评分评分","options":[]},
-        {"qtype":"下拉","require":true,"qtitle":"下拉","options":["下拉!!"]},
-        {"qtype":"比重","require":true,"qtitle":"比重","options":["比重1","比重2"]}
-    ]
-}
 ###

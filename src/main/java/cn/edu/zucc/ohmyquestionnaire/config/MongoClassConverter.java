@@ -3,6 +3,7 @@ package cn.edu.zucc.ohmyquestionnaire.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
@@ -25,5 +26,10 @@ public class MongoClassConverter {
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mongoMappingContext);
         converter.setTypeMapper(new DefaultMongoTypeMapper(null));
         return converter;
+    }
+
+    @Bean
+    MongoTransactionManager transactionManager() {
+        return new MongoTransactionManager(mongoDbFactory);
     }
 }

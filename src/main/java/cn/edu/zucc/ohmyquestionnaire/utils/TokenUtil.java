@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Slf4j
 public class TokenUtil {
-    private static final long EXPIRE_TIME = 60 * 60 * 1000; // 有效期1小时
+    private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000; // 有效期1小时
     private static final String TOKEN_SECRET = "ohmq";
 
     public static String sign(UserLoginForm loginForm) {
