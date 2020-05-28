@@ -29,6 +29,26 @@ public class UserController {
         this.questionnaireService = questionnaireService;
     }
 
+    @ApiOperation(value = "返回用户下的某个问卷")
+    @GetMapping("{uid}/questionnaire/{id}")
+    public ResultBean<QuestionnaireForm> userQuestionnaire(@PathVariable("uid") Integer uid, @PathVariable("id") String id) {
+        ResultBean<QuestionnaireForm> rtVal = new ResultBean<>();
+        BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(id);
+        if (questionnaire != null) {
+            if (!questionnaire.getUid().equals(uid)) {
+                rtVal.setCode(StatusCode.NO_PERMISSION.getCode());
+                rtVal.setMsg("权限不足");
+            } else {
+                QuestionnaireForm questionnaireForm = questionnaireService.convertToForm(questionnaire);
+                rtVal.setData(questionnaireForm);
+            }
+        } else {
+            rtVal.setCode(StatusCode.FAIL.getCode());
+            rtVal.setMsg("不存在");
+        }
+        return rtVal;
+    }
+
     @ApiOperation(value = "创建问卷,有id则表示修改")
     @PostMapping("/{uid}/questionnaire")
     public ResultBean<QuestionnaireForm> createOneQuestionnaire(@PathVariable("uid") Integer uid, @RequestBody QuestionnaireForm questionnaireForm) {

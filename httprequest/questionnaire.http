@@ -5,8 +5,7 @@
 @token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDczMjYzNX0.i4LRDON0p7XzEC2K6WmxD0cdM3x9NUV5veMG7rN-brA
 
 ###
-GET http://{{host}}/questionnaire/5ecfb0bd3653ea4e167e9d4b
-x-token: {{token}}
+GET http://{{host}}/questionnaire/share/5ecfbdd812f78d4ad2f761f2
 
 ###
 GET http://localhost:8001/questionnaire/5ecf40b0a3ffcc141f89a7be

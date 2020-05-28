@@ -26,8 +26,9 @@ public class QuestionnaireController {
         this.questionnaireService = questionnaireService;
     }
 
-    @GetMapping("/{id}")
-    public ResultBean<QuestionnaireForm> userQuestionnaire(@PathVariable("id") String id) {
+    @ApiOperation(value = "获取分享的已发布问卷", notes = "无登录验证")
+    @GetMapping("share/{id}")
+    public ResultBean<QuestionnaireForm> questionnaire(@PathVariable("id") String id) {
         ResultBean<QuestionnaireForm> rtVal = new ResultBean<>();
         BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(id);
         if (questionnaire != null) {
@@ -82,16 +83,21 @@ public class QuestionnaireController {
         ResultBean<Object> rtVal = new ResultBean<>();
         BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(deleteForm.getId());
         if (questionnaire != null) {
-            BeanTrashQuestionnaire trashQuestionnaire = BeanTrashQuestionnaire.builder().build();
-            BeanUtils.copyProperties(questionnaire, trashQuestionnaire);
-            try {
-                questionnaireService.deleteQuestionnaire(questionnaire);
-                trashQuestionnaire.setDeleteTime(new Date());
-                trashQuestionnaire.setStatus(QuestionnaireCode.DELETED.getCode());
-                questionnaireService.addToTrash(trashQuestionnaire);
-            } catch (Exception e) {
-                e.printStackTrace();
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            if (!questionnaire.getUid().equals(deleteForm.getUid())) {
+                rtVal.setCode(StatusCode.NO_PERMISSION.getCode());
+                rtVal.setMsg("权限不足");
+            } else {
+                BeanTrashQuestionnaire trashQuestionnaire = BeanTrashQuestionnaire.builder().build();
+                BeanUtils.copyProperties(questionnaire, trashQuestionnaire);
+                try {
+                    questionnaireService.deleteQuestionnaire(questionnaire);
+                    trashQuestionnaire.setDeleteTime(new Date());
+                    trashQuestionnaire.setStatus(QuestionnaireCode.DELETED.getCode());
+                    questionnaireService.addToTrash(trashQuestionnaire);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                }
             }
         } else {
             rtVal.setCode(StatusCode.FAIL.getCode());
