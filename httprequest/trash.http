@@ -1,0 +1,10 @@
+@hostname = localhost
+@port = 8001
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDczMjYzNX0.i4LRDON0p7XzEC2K6WmxD0cdM3x9NUV5veMG7rN-brA
+
+###
+GET http://{{host}}/trash/recover/5ecfb0cd3653ea4e167e9d4c
+x-token: {{token}}
+###

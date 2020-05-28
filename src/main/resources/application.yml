@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://111.230.30.42/questionnaire?characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://111.230.30.42/questionnaire?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: 243200
     type: com.alibaba.druid.pool.DruidDataSource
@@ -24,6 +24,8 @@ spring:
       uri: mongodb+srv://243200:fjtI1ycupJG1025t@cluster0-edkmb.azure.mongodb.net
   jpa:
     open-in-view: false
+  jackson:
+    time-zone: GMT+8
 
 logging:
   level:

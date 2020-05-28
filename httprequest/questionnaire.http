@@ -5,6 +5,10 @@
 @token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDczMjYzNX0.i4LRDON0p7XzEC2K6WmxD0cdM3x9NUV5veMG7rN-brA
 
 ###
+GET http://{{host}}/questionnaire/5ecfb0bd3653ea4e167e9d4b
+x-token: {{token}}
+
+###
 GET http://localhost:8001/questionnaire/5ecf40b0a3ffcc141f89a7be
 x-token: {{token}}
 
@@ -17,6 +21,13 @@ GET http://localhost:8001/questionnaire/user/6/trash?page=0
 x-token: {{token}}
 
 ###
-GET http://{{host}}/questionnaire/5ecf4a14a3ffcc141f89a7c4/recover
+
+POST http://{{host}}/questionnaire/delete
 x-token: {{token}}
+Content-Type: {{contentType}}
+
+{
+    "uid":6,
+    "id":"5ecfb0cd3653ea4e167e9d4c"
+}
 ###

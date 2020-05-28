@@ -6,6 +6,7 @@ import cn.edu.zucc.ohmyquestionnaire.form.TrashQuestionnaireForm;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanTrashQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ public class TrashController {
         this.questionnaireService = questionnaireService;
     }
 
+    @ApiOperation(value = "移出垃圾箱")
     @Transactional(rollbackFor = {Exception.class})
     @GetMapping("/recover/{id}")
     public ResultBean<TrashQuestionnaireForm> userTrashQuestionnaire(@PathVariable("id") String id) {
@@ -40,7 +42,7 @@ public class TrashController {
                 questionnaireService.addQuestionnaire(questionnaire);
             } catch (Exception e) {
                 e.printStackTrace();
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly(); //必加
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly(); //回滚
             }
         }
 

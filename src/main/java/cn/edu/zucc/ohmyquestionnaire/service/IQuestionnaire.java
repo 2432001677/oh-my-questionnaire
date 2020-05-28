@@ -14,6 +14,8 @@ public interface IQuestionnaire {
 
     BeanQuestionnaire addQuestionnaire(BeanQuestionnaire beanQuestionnaire);
 
+    void deleteQuestionnaire(BeanQuestionnaire beanQuestionnaire);
+
     BeanQuestionnaire updateQuestionnaire(BeanQuestionnaire beanQuestionnaire);
 
     Page<BeanQuestionnaire> pageQuestionnaire(int uid, int page, int size);

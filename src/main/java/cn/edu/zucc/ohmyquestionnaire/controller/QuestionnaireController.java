@@ -5,12 +5,13 @@ import cn.edu.zucc.ohmyquestionnaire.enums.StatusCode;
 import cn.edu.zucc.ohmyquestionnaire.form.*;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanTrashQuestionnaire;
-import cn.edu.zucc.ohmyquestionnaire.mongo.pojo.Question;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -31,35 +32,15 @@ public class QuestionnaireController {
         BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(id);
         if (questionnaire != null) {
             if (questionnaire.getStatus().equals(QuestionnaireCode.OPENING.getCode())) {
-                List<QuestionForm> questionFormList = new ArrayList<>();
-                // Question的Map转为QuestionForm的List
-                for (Question question : questionnaire.getQuestions()) {
-                    Map<String, String> oldOptions = question.getOptions();
-                    QuestionForm questionForm = QuestionForm.builder().build();
-                    List<String> newOptions = new ArrayList<>(oldOptions.size());
-                    oldOptions.keySet().forEach((key) -> newOptions.add(Integer.parseInt(key), oldOptions.get(key)));
-
-                    BeanUtils.copyProperties(question, questionForm);
-                    questionForm.setOptions(newOptions);
-                    questionFormList.add(questionForm);
-                }
-                QuestionnaireForm questionnaireForm = QuestionnaireForm.builder()
-                        .description(questionnaire.getDescription())
-                        .createTime(questionnaire.getCreateTime())
-                        .status(questionnaire.getStatus())
-                        .title(questionnaire.getTitle())
-                        .questions(questionFormList)
-                        .id(questionnaire.getId())
-                        .build();
-
+                QuestionnaireForm questionnaireForm = questionnaireService.convertToForm(questionnaire);
                 rtVal.setData(questionnaireForm);
             } else {
-                rtVal.setMsg("该问卷已关闭或被删除");
                 rtVal.setCode(StatusCode.NO_PERMISSION.getCode());
+                rtVal.setMsg("该问卷已关闭或被删除");
             }
         } else {
-            rtVal.setMsg("不存在");
             rtVal.setCode(StatusCode.FAIL.getCode());
+            rtVal.setMsg("不存在");
         }
         return rtVal;
     }
@@ -95,9 +76,27 @@ public class QuestionnaireController {
         return new ResultPageBean<>(page, data, questionnaires);
     }
 
+    @Transactional(rollbackFor = {Exception.class})
     @PostMapping("/delete")
     public ResultBean<Object> deleteQuestionnaire(@RequestBody DeleteForm deleteForm) {
         ResultBean<Object> rtVal = new ResultBean<>();
+        BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(deleteForm.getId());
+        if (questionnaire != null) {
+            BeanTrashQuestionnaire trashQuestionnaire = BeanTrashQuestionnaire.builder().build();
+            BeanUtils.copyProperties(questionnaire, trashQuestionnaire);
+            try {
+                questionnaireService.deleteQuestionnaire(questionnaire);
+                trashQuestionnaire.setDeleteTime(new Date());
+                trashQuestionnaire.setStatus(QuestionnaireCode.DELETED.getCode());
+                questionnaireService.addToTrash(trashQuestionnaire);
+            } catch (Exception e) {
+                e.printStackTrace();
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            }
+        } else {
+            rtVal.setCode(StatusCode.FAIL.getCode());
+            rtVal.setMsg("问卷不存在");
+        }
 
         return rtVal;
     }

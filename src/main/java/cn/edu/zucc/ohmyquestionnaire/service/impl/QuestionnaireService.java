@@ -42,6 +42,11 @@ public class QuestionnaireService implements IQuestionnaire, IQuestion, ITrash {
     }
 
     @Override
+    public void deleteQuestionnaire(BeanQuestionnaire beanQuestionnaire) {
+        questionnaireDao.delete(beanQuestionnaire);
+    }
+
+    @Override
     public BeanQuestionnaire updateQuestionnaire(BeanQuestionnaire beanQuestionnaire) {
         beanQuestionnaire = questionnaireDao.save(beanQuestionnaire);
         return beanQuestionnaire;
@@ -72,6 +77,12 @@ public class QuestionnaireService implements IQuestionnaire, IQuestion, ITrash {
     @Override
     public void deleteTrashQuestionnaire(String id) {
         trashDao.deleteById(id);
+    }
+
+    @Override
+    public BeanTrashQuestionnaire addToTrash(BeanTrashQuestionnaire trashQuestionnaire) {
+        trashDao.insert(trashQuestionnaire);
+        return trashQuestionnaire;
     }
 
     @Override
