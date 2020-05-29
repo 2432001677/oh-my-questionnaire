@@ -1,15 +1,13 @@
 package cn.edu.zucc.ohmyquestionnaire.mongo.pojo;
 
-import lombok.Builder;
 import lombok.Data;
 
-import java.util.Map;
+import java.util.List;
 
 @Data
-@Builder(toBuilder = true)
-public class Question {
+public class Answer {
     private String qtype;
     private Boolean require;
     private String qtitle;
-    private Map<String, String> options;
+    private List<Object> selected;
 }
