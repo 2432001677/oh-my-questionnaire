@@ -64,13 +64,13 @@ public class QuestionnaireService implements IQuestionnaire, IQuestion, ITrash {
 
     @Override
     public Page<BeanQuestionnaire> pageQuestionnaire(int uid, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createTime"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime"));
         return questionnaireDao.findAllByUid(uid, pageable);
     }
 
     @Override
     public Page<BeanTrashQuestionnaire> trashPageQuestionnaire(int uid, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createTime"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime"));
         return trashDao.findAllByUid(uid, pageable);
     }
 
