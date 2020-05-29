@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TrashDao extends MongoRepository<BeanTrashQuestionnaire, String> {
     Page<BeanTrashQuestionnaire> findAllByUid(Integer uid, Pageable pageable);
+
+    void deleteAllByUid(Integer uid);
 }

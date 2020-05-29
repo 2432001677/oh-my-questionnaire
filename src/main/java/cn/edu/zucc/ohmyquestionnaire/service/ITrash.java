@@ -36,4 +36,6 @@ public interface ITrash {
      * @return
      */
     BeanTrashQuestionnaire addToTrash(BeanTrashQuestionnaire trashQuestionnaire);
+
+    void clearTrash(int uid);
 }

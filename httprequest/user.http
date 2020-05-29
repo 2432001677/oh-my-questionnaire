@@ -2,7 +2,7 @@
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDczMjYzNX0.i4LRDON0p7XzEC2K6WmxD0cdM3x9NUV5veMG7rN-brA
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDgzNzIzM30.8Oy5UpWMKYlQORRAL7m_bQ2fRgCaJ9-_HRFJLm6VHSM
 
 ###
 POST http://{{host}}/user/login

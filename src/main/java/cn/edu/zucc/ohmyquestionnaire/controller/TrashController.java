@@ -65,4 +65,22 @@ public class TrashController {
         }
         return new ResultPageBean<>(page, data, questionnaires);
     }
+
+    @ApiOperation(value = "永久删除一个垃圾箱问卷")
+    @PostMapping("/delete/{id}")
+    public ResultBean<Object> deleteOneTrash(@PathVariable("id") String id) {
+        ResultBean<Object> rtVal = new ResultBean<>();
+        questionnaireService.deleteTrashQuestionnaire(id);
+        rtVal.setData(null);
+        return rtVal;
+    }
+
+    @ApiOperation(value = "清空用户垃圾箱问卷")
+    @PostMapping("/clear/user/{uid}")
+    public ResultBean<Object> clearTrash(@PathVariable("uid") Integer uid) {
+        ResultBean<Object> rtVal = new ResultBean<>();
+        questionnaireService.clearTrash(uid);
+        rtVal.setData(null);
+        return rtVal;
+    }
 }

@@ -86,6 +86,11 @@ public class QuestionnaireService implements IQuestionnaire, IQuestion, ITrash {
     }
 
     @Override
+    public void clearTrash(int uid) {
+        trashDao.deleteAllByUid(uid);
+    }
+
+    @Override
     public BeanQuestionnaire convertToBean(QuestionnaireForm questionnaireForm) {
         BeanQuestionnaire beanQuestionnaire = BeanQuestionnaire.builder()
                 .id(questionnaireForm.getId())
