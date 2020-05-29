@@ -48,27 +48,11 @@ public class QuestionnaireController {
 
     @ApiOperation(value = "分页返回用户已发布和未发布问卷")
     @GetMapping("/user/{uid}")
-    public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> userPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-        if (size == null || size <= 0) size = 5;
+    public ResultPageBean<QuestionnaireForm, BeanQuestionnaire> userPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "5") Integer size) {
         Page<BeanQuestionnaire> questionnaires = questionnaireService.pageQuestionnaire(uid, page, size);
         List<QuestionnaireForm> data = new ArrayList<>();
 
         for (BeanQuestionnaire t : questionnaires.getContent()) {
-            QuestionnaireForm form = QuestionnaireForm.builder().build();
-            BeanUtils.copyProperties(t, form);
-            form.setQuestions(null);
-            data.add(form);
-        }
-        return new ResultPageBean<>(page, data, questionnaires);
-    }
-
-    @ApiOperation(value = "分页返回用户垃圾箱问卷")
-    @GetMapping("/user/{uid}/trash")
-    public ResultPageBean<QuestionnaireForm, BeanTrashQuestionnaire> userTrashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-        if (size == null || size <= 0) size = 5;
-        Page<BeanTrashQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page, size);
-        List<QuestionnaireForm> data = new ArrayList<>();
-        for (BeanTrashQuestionnaire t : questionnaires.getContent()) {
             QuestionnaireForm form = QuestionnaireForm.builder().build();
             BeanUtils.copyProperties(t, form);
             form.setQuestions(null);

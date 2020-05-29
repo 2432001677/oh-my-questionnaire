@@ -1,7 +1,9 @@
 package cn.edu.zucc.ohmyquestionnaire.controller;
 
 import cn.edu.zucc.ohmyquestionnaire.enums.QuestionnaireCode;
+import cn.edu.zucc.ohmyquestionnaire.form.QuestionnaireForm;
 import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
+import cn.edu.zucc.ohmyquestionnaire.form.ResultPageBean;
 import cn.edu.zucc.ohmyquestionnaire.form.TrashQuestionnaireForm;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanTrashQuestionnaire;
@@ -9,12 +11,13 @@ import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -47,5 +50,19 @@ public class TrashController {
         }
 
         return rtVal;
+    }
+
+    @ApiOperation(value = "分页返回用户垃圾箱问卷")
+    @GetMapping("/user/{uid}")
+    public ResultPageBean<QuestionnaireForm, BeanTrashQuestionnaire> userTrashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        Page<BeanTrashQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page, size);
+        List<QuestionnaireForm> data = new ArrayList<>();
+        for (BeanTrashQuestionnaire t : questionnaires.getContent()) {
+            QuestionnaireForm form = QuestionnaireForm.builder().build();
+            BeanUtils.copyProperties(t, form);
+            form.setQuestions(null);
+            data.add(form);
+        }
+        return new ResultPageBean<>(page, data, questionnaires);
     }
 }
