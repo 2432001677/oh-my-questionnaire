@@ -90,4 +90,36 @@ public class QuestionnaireController {
 
         return rtVal;
     }
+
+    @PostMapping("/public")
+    public ResultBean<Object> openQuestionnaire(@RequestBody PublicForm publicForm) {
+        ResultBean<Object> rtVal = new ResultBean<>();
+        BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(publicForm.getId());
+        if (questionnaire != null) {
+            questionnaire.setStatus(QuestionnaireCode.OPENING.getCode());
+            questionnaireService.updateQuestionnaire(questionnaire);
+            rtVal.setMsg("发布成功");
+        } else {
+            rtVal.setMsg("问卷不存在");
+            rtVal.setCode(StatusCode.FAIL.getCode());
+        }
+
+        return rtVal;
+    }
+
+    @PostMapping("/close")
+    public ResultBean<Object> closeQuestionnaire(@RequestBody PublicForm publicForm) {
+        ResultBean<Object> rtVal = new ResultBean<>();
+        BeanQuestionnaire questionnaire = questionnaireService.getQuestionnaire(publicForm.getId());
+        if (questionnaire != null) {
+            questionnaire.setStatus(QuestionnaireCode.CLOSED.getCode());
+            questionnaireService.updateQuestionnaire(questionnaire);
+            rtVal.setMsg("已关闭");
+        } else {
+            rtVal.setMsg("问卷不存在");
+            rtVal.setCode(StatusCode.FAIL.getCode());
+        }
+
+        return rtVal;
+    }
 }

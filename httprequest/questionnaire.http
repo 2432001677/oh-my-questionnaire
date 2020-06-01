@@ -2,7 +2,7 @@
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDgzNzIzM30.8Oy5UpWMKYlQORRAL7m_bQ2fRgCaJ9-_HRFJLm6VHSM
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MTA4OTA1OH0.Petyd_FZd9HeVYZ0WXUeQMRMwzheV3Hrm5zFjfBHsGo
 
 ###
 GET http://{{host}}/questionnaire/share/5ecfbdd812f78d4ad2f761f2
@@ -20,7 +20,6 @@ GET http://localhost:8001/trash/user/6?page=0
 x-token: {{token}}
 
 ###
-
 POST http://{{host}}/questionnaire/delete
 x-token: {{token}}
 Content-Type: {{contentType}}
@@ -29,4 +28,22 @@ Content-Type: {{contentType}}
     "uid":6,
     "id":"5ed0ac1a71ba90311a779875"
 }
+
 ###
+POST http://{{host}}/questionnaire/close
+x-token: {{token}}
+Content-Type: {{contentType}}
+
+{
+    "uid":6,
+    "id":"5ed4acb2dcaf7f456edddb1f"
+}
+###
+POST http://{{host}}/questionnaire/public
+x-token: {{token}}
+Content-Type: {{contentType}}
+
+{
+    "uid":6,
+    "id":"5ed4acb2dcaf7f456edddb1f"
+}
