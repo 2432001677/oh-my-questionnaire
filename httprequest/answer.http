@@ -1,0 +1,27 @@
+@hostname = localhost
+@port = 8001
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MTI1Nzk2Nn0.jA-DUkga9ehNVaNYvr9LBnMoMQBH1g_teObX3CFJsa4
+
+###
+POST http://{{host}}/answer
+x-token: {{token}}
+Content-Type: {{contentType}}
+
+{
+    "qid":"5ed75a089a1cb56779df030c",
+    "title":"问66",
+    "description":"dfdc1",
+    "status":2,
+    "create_time":"2020-05-28T15:56:24.525Z",
+     "answers":[
+        {"qtype":"多选","require":true,"qtitle":"择一下选项(多选)","options":["选项1","选项2"],"selected":["选项1","选项2"]},
+        {"qtype":"单选","require":false,"qtitle":"请选个选项","options":["选1","选2"],"selected":["选2"]},
+        {"qtype":"填空","require":false,"qtitle":"标题标题","options":[],"selected":["填空题回答大师考虑到哈撒加快了"]},
+        {"qtype":"评分","require":true,"qtitle":"评分评分","options":[],"selected":["2"]},
+        {"qtype":"下拉","require":true,"qtitle":"下拉","options":["下拉!!"],"selected":["下拉!!"]},
+        {"qtype":"比重","require":true,"qtitle":"比重","options":["比重1","比重2"],"selected":["20","80"]}
+    ]
+}
+###

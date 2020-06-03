@@ -1,17 +1,16 @@
-package cn.edu.zucc.ohmyquestionnaire.mongo.pojo;
+package cn.edu.zucc.ohmyquestionnaire.form;
 
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Builder(toBuilder = true)
-public class Answer {
+public class AnswerForm {
+    private String qtitle;
     private String qtype;
     private Boolean require;
-    private String qtitle;
-    private Map<String, String> options;
+    private List<String> options;
     private List<String> selected;
 }

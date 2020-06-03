@@ -2,7 +2,7 @@
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MDgzNzIzM30.8Oy5UpWMKYlQORRAL7m_bQ2fRgCaJ9-_HRFJLm6VHSM
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MTI1Nzk2Nn0.jA-DUkga9ehNVaNYvr9LBnMoMQBH1g_teObX3CFJsa4
 
 ###
 POST http://{{host}}/user/login
@@ -20,9 +20,9 @@ Content-Type: {{contentType}}
 
 {
     "id":"",
-    "title":"问",
-    "description":"esc1",
-    "status":0,
+    "title":"问66",
+    "description":"dfdc1",
+    "status":2,
     "create_time":"2020-05-28T15:56:24.525Z",
      "questions":[
         {"qtype":"多选","require":true,"qtitle":"择一下选项(多选)","options":["选项1","选项2"]},

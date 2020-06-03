@@ -12,7 +12,7 @@ GET http://localhost:8001/questionnaire/5ecf40b0a3ffcc141f89a7be
 x-token: {{token}}
 
 ###
-GET http://localhost:8001/questionnaire/user/6?page=0
+GET http://localhost:8001/questionnaire/user/6?page=3&size=5
 x-token: {{token}}
 
 ###
@@ -36,7 +36,7 @@ Content-Type: {{contentType}}
 
 {
     "uid":6,
-    "id":"5ed4acb2dcaf7f456edddb1f"
+    "id":"5ed05468686f43645f0f59fb"
 }
 ###
 POST http://{{host}}/questionnaire/public
@@ -45,5 +45,5 @@ Content-Type: {{contentType}}
 
 {
     "uid":6,
-    "id":"5ed4acb2dcaf7f456edddb1f"
+    "id":"5ed05468686f43645f0f59fb"
 }

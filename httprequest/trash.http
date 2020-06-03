@@ -9,7 +9,7 @@ GET http://{{host}}/trash/recover/5ecfb0cd3653ea4e167e9d4c
 x-token: {{token}}
 ###
 
-POST http://{{host}}/trash/delete/5ed0ac1a71ba90311a779875
+POST http://{{host}}/trash/delete/5ed055d5ef9ef15c6e54c406
 x-token: {{token}}
 ###
 POST http://{{host}}/trash/clear/user/6
