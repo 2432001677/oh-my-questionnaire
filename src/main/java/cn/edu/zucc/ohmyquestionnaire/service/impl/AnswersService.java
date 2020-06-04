@@ -19,6 +19,11 @@ public class AnswersService implements IAnswer {
     }
 
     @Override
+    public List<BeanAnswers> getAllAnswers(String qid) {
+        return answersDao.findByQid(qid);
+    }
+
+    @Override
     public BeanAnswers addAnswers(BeanAnswers beanAnswers) {
         beanAnswers.setId(null);
         answersDao.insert(beanAnswers);

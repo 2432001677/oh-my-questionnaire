@@ -1,8 +1,8 @@
-@hostname = localhost
+@hostname = 111.230.30.42
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MTI1Nzk2Nn0.jA-DUkga9ehNVaNYvr9LBnMoMQBH1g_teObX3CFJsa4
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MTM0MTg5M30.sKG3r5xV4y1IanKFAM7RHHxsR9KjB7iMNjsljOCJdTI
 
 ###
 POST http://{{host}}/answer
@@ -10,7 +10,7 @@ x-token: {{token}}
 Content-Type: {{contentType}}
 
 {
-    "qid":"5ed75a089a1cb56779df030c",
+    "qid":"5eccbabae1c412336bff091a",
     "title":"问66",
     "description":"dfdc1",
     "status":2,
@@ -25,3 +25,4 @@ Content-Type: {{contentType}}
     ]
 }
 ###
+{"_id":{"$oid":"5eccbabae1c412336bff091a"
