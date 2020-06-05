@@ -1,9 +1,9 @@
-@hostname = localhost
+@hostname = 111.230.30.42
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json
 @token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJOYW1lIjoiYSIsImV4cCI6MTU5MTQyOTIwM30.RRYe-X5oRe6LRV_8DKwa7bEpqahSJej-cMRjys1-hSQ
 
 ###
-GET http://{{host}}/analyze/5ed8fb04b80fc6643c73c8ec
+GET http://{{host}}/analyze/5ed4acb2dcaf7f456edddb1f
 x-token: {{token}}

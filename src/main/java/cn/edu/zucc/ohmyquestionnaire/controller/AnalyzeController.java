@@ -72,13 +72,13 @@ public class AnalyzeController {
                         .options(analyzeOptions)
                         .build();
                 analysisFormList.add(analysisForm);
-                log.debug(analysisForm.toString());
             });
             for (int i = 0; i < analysisFormList.size(); i++) {
                 // 单个问题分析
                 AnalysisForm analysisForm = analysisFormList.get(i);
                 // 问题选项集合
                 Map<String, String> questionOptions = questionnaire.getQuestions().get(i).getOptions();
+                log.debug(questionOptions.toString());
                 // 回答选项分析集合
                 List<Option> analyzeOptions = analysisFormList.get(i).getOptions();
                 for (BeanAnswers answers : beanAnswersList) {

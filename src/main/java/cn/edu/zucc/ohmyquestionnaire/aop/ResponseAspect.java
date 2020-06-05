@@ -33,6 +33,7 @@ public class ResponseAspect {
             Object[] args = pjp.getArgs();
             r = pjp.proceed(args);
         } catch (Throwable throwable) {
+            log.debug(throwable.toString());
             assert method != null;
             return method.getReturnType().equals(ResultBean.class) ? new ResultBean<>(throwable) : new ResultPageBean<>(throwable);
         } finally {
