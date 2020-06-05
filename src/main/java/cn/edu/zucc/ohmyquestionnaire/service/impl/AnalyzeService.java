@@ -16,8 +16,4 @@ public class AnalyzeService implements IAnalyze {
         this.answersDao = answersDao;
     }
 
-    @Override
-    public StatisticForm convertToStatisticForm(List<BeanAnswers> answersList) {
-        return null;
-    }
 }
