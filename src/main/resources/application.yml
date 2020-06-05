@@ -21,7 +21,7 @@ spring:
   data:
     mongodb:
       database: question
-      uri: mongodb://localhost:27017
+      uri: mongodb+srv://243200:fjtI1ycupJG1025t@cluster0-edkmb.azure.mongodb.net
   jpa:
     open-in-view: false
   jackson:

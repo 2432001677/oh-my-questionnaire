@@ -71,14 +71,19 @@ public class AnalyzeController {
                         .qtype(question.getQtype())
                         .options(analyzeOptions)
                         .build();
+
+                System.out.println("analyForm: "+analysisForm.toString());
                 analysisFormList.add(analysisForm);
             });
+			for(BeanAnswers answers : beanAnswersList){
+				for(int x=0;x<answers.getAnswers().size();++x)
+                	System.out.println("answers: "+answers.getAnswers().get(x).toString());
+			}
             for (int i = 0; i < analysisFormList.size(); i++) {
                 // 单个问题分析
                 AnalysisForm analysisForm = analysisFormList.get(i);
                 // 问题选项集合
                 Map<String, String> questionOptions = questionnaire.getQuestions().get(i).getOptions();
-                log.debug(questionOptions.toString());
                 // 回答选项分析集合
                 List<Option> analyzeOptions = analysisFormList.get(i).getOptions();
                 for (BeanAnswers answers : beanAnswersList) {
@@ -124,7 +129,9 @@ public class AnalyzeController {
                             break;
                         }
                         case "多选": {
+							log.debug(selectedList.toString());
                             for (String selected : selectedList) {
+								log.debug(questionOptions.toString());
                                 for (String key : questionOptions.keySet()) {
                                     if (selected.equals(answerOptions.get(key))) {
                                         int index = Integer.parseInt(key);
