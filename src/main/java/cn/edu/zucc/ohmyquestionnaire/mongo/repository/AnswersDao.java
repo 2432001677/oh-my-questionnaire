@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AnswersDao extends MongoRepository<BeanAnswers,String > {
     List<BeanAnswers> findByQid(String qid);
+
+    void deleteAllByQid(String qid);
 }

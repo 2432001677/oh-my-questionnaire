@@ -5,6 +5,7 @@ import cn.edu.zucc.ohmyquestionnaire.enums.StatusCode;
 import cn.edu.zucc.ohmyquestionnaire.form.*;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanTrashQuestionnaire;
+import cn.edu.zucc.ohmyquestionnaire.service.impl.AnswersService;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +22,11 @@ import java.util.*;
 @RequestMapping("questionnaire")
 public class QuestionnaireController {
     private final QuestionnaireService questionnaireService;
+    private final AnswersService answersService;
 
-    public QuestionnaireController(QuestionnaireService questionnaireService) {
+    public QuestionnaireController(QuestionnaireService questionnaireService, AnswersService answersService) {
         this.questionnaireService = questionnaireService;
+        this.answersService = answersService;
     }
 
     @ApiOperation(value = "获取分享的已发布问卷", notes = "无登录验证")
@@ -75,6 +78,8 @@ public class QuestionnaireController {
                 BeanUtils.copyProperties(questionnaire, trashQuestionnaire);
                 try {
                     questionnaireService.deleteQuestionnaire(questionnaire);
+                    // 删除答卷
+                    answersService.deleteAllQuestionnaireAnswers(deleteForm.getId());
                     trashQuestionnaire.setDeleteTime(new Date());
                     trashQuestionnaire.setStatus(QuestionnaireCode.DELETED.getCode());
                     questionnaireService.addToTrash(trashQuestionnaire);

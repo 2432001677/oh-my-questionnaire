@@ -4,6 +4,7 @@ import cn.edu.zucc.ohmyquestionnaire.enums.StatusCode;
 import cn.edu.zucc.ohmyquestionnaire.form.*;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
 import cn.edu.zucc.ohmyquestionnaire.mysql.bean.BeanUser;
+import cn.edu.zucc.ohmyquestionnaire.service.impl.AnswersService;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.UserService;
 import cn.edu.zucc.ohmyquestionnaire.utils.TokenUtil;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,10 +25,12 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
     private final UserService userService;
+    private final AnswersService answersService;
     private final QuestionnaireService questionnaireService;
 
-    public UserController(UserService userService, QuestionnaireService questionnaireService) {
+    public UserController(UserService userService, AnswersService answersService, QuestionnaireService questionnaireService) {
         this.userService = userService;
+        this.answersService = answersService;
         this.questionnaireService = questionnaireService;
     }
 
@@ -50,6 +55,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "创建问卷,有id则表示修改")
+    @Transactional(rollbackFor = {Exception.class})
     @PostMapping("/{uid}/questionnaire")
     public ResultBean<QuestionnaireForm> createOneQuestionnaire(@PathVariable("uid") Integer uid, @RequestBody QuestionnaireForm questionnaireForm) {
         ResultBean<QuestionnaireForm> rtVal = new ResultBean<>();
@@ -62,10 +68,17 @@ public class UserController {
                 rtVal.setCode(StatusCode.FAIL.getCode());
                 return rtVal;
             }
-            beanQuestionnaire = questionnaireService.convertToBean(questionnaireForm);
-            beanQuestionnaire.setUid(uid);
-            beanQuestionnaire = questionnaireService.updateQuestionnaire(beanQuestionnaire);
-            rtVal.setMsg("修改成功");
+            try {
+                beanQuestionnaire = questionnaireService.convertToBean(questionnaireForm);
+                beanQuestionnaire.setUid(uid);
+                beanQuestionnaire = questionnaireService.updateQuestionnaire(beanQuestionnaire);
+                // 修改就删除答卷
+                answersService.deleteAllQuestionnaireAnswers(questionnaireForm.getId());
+                rtVal.setMsg("修改成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            }
         } else {
             beanQuestionnaire = questionnaireService.convertToBean(questionnaireForm);
             beanQuestionnaire.setUid(uid);

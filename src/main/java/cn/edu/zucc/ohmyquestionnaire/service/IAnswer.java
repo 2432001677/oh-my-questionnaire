@@ -11,4 +11,6 @@ public interface IAnswer {
     BeanAnswers addAnswers(BeanAnswers beanAnswers);
 
     List<BeanAnswers> getAllAnswers(String qid);
+
+    void deleteAllQuestionnaireAnswers(String qid);
 }

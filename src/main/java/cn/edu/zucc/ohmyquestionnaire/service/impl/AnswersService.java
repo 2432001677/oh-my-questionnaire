@@ -24,6 +24,11 @@ public class AnswersService implements IAnswer {
     }
 
     @Override
+    public void deleteAllQuestionnaireAnswers(String qid) {
+        answersDao.deleteAllByQid(qid);
+    }
+
+    @Override
     public BeanAnswers addAnswers(BeanAnswers beanAnswers) {
         beanAnswers.setId(null);
         answersDao.insert(beanAnswers);
