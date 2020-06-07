@@ -1,4 +1,4 @@
-@hostname = 111.230.30.42
+@hostname = 127.0.0.1
 @port = 8001
 @host = {{hostname}}:{{port}}
 @contentType = application/json

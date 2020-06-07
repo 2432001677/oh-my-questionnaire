@@ -54,11 +54,11 @@ public class TrashController {
 
     @ApiOperation(value = "分页返回用户垃圾箱问卷")
     @GetMapping("/user/{uid}")
-    public ResultPageBean<QuestionnaireForm, BeanTrashQuestionnaire> userTrashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size) {
+    public ResultPageBean<TrashQuestionnaireForm, BeanTrashQuestionnaire> userTrashPageQuestionnaire(@PathVariable("uid") Integer uid, @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Page<BeanTrashQuestionnaire> questionnaires = questionnaireService.trashPageQuestionnaire(uid, page, size);
-        List<QuestionnaireForm> data = new ArrayList<>();
+        List<TrashQuestionnaireForm> data = new ArrayList<>();
         for (BeanTrashQuestionnaire t : questionnaires.getContent()) {
-            QuestionnaireForm form = QuestionnaireForm.builder().build();
+            TrashQuestionnaireForm form = TrashQuestionnaireForm.builder().build();
             BeanUtils.copyProperties(t, form);
             form.setQuestions(null);
             data.add(form);

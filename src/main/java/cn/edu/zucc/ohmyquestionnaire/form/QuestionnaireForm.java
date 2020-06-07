@@ -13,6 +13,7 @@ public class QuestionnaireForm {
     private String id;
     private Integer status;
     private String title;
+    private Integer answerNum;
     private String description;
     @JsonAlias("create_time")
     private Date createTime;

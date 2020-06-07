@@ -14,6 +14,7 @@ public class TrashQuestionnaireForm {
     private Integer status;
     private String title;
     private String description;
+    private Integer answerNum;
     @JsonAlias("create_time")
     private Date createTime;
     @JsonAlias("delete_time")

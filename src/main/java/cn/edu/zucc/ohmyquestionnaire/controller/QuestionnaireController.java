@@ -59,6 +59,7 @@ public class QuestionnaireController {
             QuestionnaireForm form = QuestionnaireForm.builder().build();
             BeanUtils.copyProperties(t, form);
             form.setQuestions(null);
+            form.setAnswerNum(answersService.getAllAnswers(t.getId()).size());
             data.add(form);
         }
         return new ResultPageBean<>(page, data, questionnaires);
