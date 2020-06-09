@@ -24,6 +24,6 @@ public class BeanAnswers {
     @Field("answer_time")
     @JsonAlias("answer_time")
     private Date answerTime;
-    @Field("questions")
+    @Field("answers")
     private List<Answer> answers;
 }
