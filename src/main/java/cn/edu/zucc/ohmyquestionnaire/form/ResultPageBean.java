@@ -21,10 +21,6 @@ public class ResultPageBean<T, V> implements Serializable {
     private int page;
     private List<T> data;
 
-    public ResultPageBean() {
-        super();
-    }
-
     public ResultPageBean(int page, List<T> data, Page<V> tPage) {
         super();
         this.page = page;

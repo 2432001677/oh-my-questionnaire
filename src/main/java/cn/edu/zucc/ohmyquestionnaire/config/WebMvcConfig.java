@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    private LoginInterceptor loginInterceptor;
+    private final LoginInterceptor loginInterceptor;
 
     public WebMvcConfig(LoginInterceptor loginInterceptor) {
         this.loginInterceptor = loginInterceptor;

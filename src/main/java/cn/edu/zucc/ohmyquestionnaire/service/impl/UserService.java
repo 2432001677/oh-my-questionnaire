@@ -9,17 +9,20 @@ import cn.edu.zucc.ohmyquestionnaire.service.IUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
 @Service
 @Slf4j
 public class UserService implements IUser, ILogin {
-    private final IUserMapper userMapper;
-
-    public UserService(IUserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
+    @Resource
+    private IUserMapper userMapper;
+//    private final IUserMapper userMapper;
+//
+//    public UserService(IUserMapper userMapper) {
+//        this.userMapper = userMapper;
+//    }
 
     @Override
     public List<BeanUser> allUser() {

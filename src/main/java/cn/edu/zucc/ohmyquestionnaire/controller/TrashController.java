@@ -1,7 +1,6 @@
 package cn.edu.zucc.ohmyquestionnaire.controller;
 
 import cn.edu.zucc.ohmyquestionnaire.enums.QuestionnaireCode;
-import cn.edu.zucc.ohmyquestionnaire.form.QuestionnaireForm;
 import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
 import cn.edu.zucc.ohmyquestionnaire.form.ResultPageBean;
 import cn.edu.zucc.ohmyquestionnaire.form.TrashQuestionnaireForm;

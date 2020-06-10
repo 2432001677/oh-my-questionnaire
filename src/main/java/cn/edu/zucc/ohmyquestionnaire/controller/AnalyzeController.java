@@ -7,7 +7,6 @@ import cn.edu.zucc.ohmyquestionnaire.form.ResultBean;
 import cn.edu.zucc.ohmyquestionnaire.form.StatisticForm;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanAnswers;
 import cn.edu.zucc.ohmyquestionnaire.mongo.bean.BeanQuestionnaire;
-import cn.edu.zucc.ohmyquestionnaire.service.impl.AnalyzeService;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.AnswersService;
 import cn.edu.zucc.ohmyquestionnaire.service.impl.QuestionnaireService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +23,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("analyze")
 public class AnalyzeController {
-    private final AnalyzeService analyzeService;
     private final QuestionnaireService questionnaireService;
     private final AnswersService answersService;
 
-    public AnalyzeController(AnalyzeService analyzeService, QuestionnaireService questionnaireService, AnswersService answersService) {
-        this.analyzeService = analyzeService;
+    public AnalyzeController(QuestionnaireService questionnaireService, AnswersService answersService) {
         this.questionnaireService = questionnaireService;
         this.answersService = answersService;
     }
@@ -72,16 +69,15 @@ public class AnalyzeController {
                         .options(analyzeOptions)
                         .build();
 
-                System.out.println("analyForm: "+analysisForm.toString());
                 analysisFormList.add(analysisForm);
             });
-			for(BeanAnswers answers : beanAnswersList){
-				for(int x=0;x<answers.getAnswers().size();++x)
-                	System.out.println("answers: "+answers.getAnswers().get(x).toString());
-			}
+//			for(BeanAnswers answers : beanAnswersList){
+//				for(int x=0;x<answers.getAnswers().size();++x)
+//                	System.out.println("answers: "+answers.getAnswers().get(x).toString());
+//			}
             for (int i = 0; i < analysisFormList.size(); i++) {
                 // 单个问题分析
-                AnalysisForm analysisForm = analysisFormList.get(i);
+//                AnalysisForm analysisForm = analysisFormList.get(i);
                 // 问题选项集合
                 Map<String, String> questionOptions = questionnaire.getQuestions().get(i).getOptions();
                 // 回答选项分析集合
@@ -129,7 +125,6 @@ public class AnalyzeController {
                             break;
                         }
                         case "多选": {
-							log.debug(selectedList.toString());
                             for (String selected : selectedList) {
 								log.debug(questionOptions.toString());
                                 for (String key : questionOptions.keySet()) {

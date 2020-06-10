@@ -16,11 +16,6 @@ public class ResultBean<T> implements Serializable {
         super();
     }
 
-    public ResultBean(T data) {
-        super();
-        this.data = data;
-    }
-
     public ResultBean(Throwable err) {
         super();
         this.msg = err.toString();
